@@ -1,4 +1,4 @@
 augroup ddl_ft
   au!
-  autocmd BufNewFile,BufRead *.ddl set filetype=c
+  autocmd BufNewFile,BufRead *.ddl set filetype=cpp
 augroup END
