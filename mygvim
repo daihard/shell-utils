@@ -3,7 +3,8 @@
 
 script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
 
-## This creates the list of VIM colours to choose from
+## Colour is chosen based on the available colours and an optional
+## exclude list (~/.vim/bad_colors.txt)
 my_color=$($script_dir/get_vim_color.sh)
 
 start_new=false
@@ -41,7 +42,7 @@ if ! $start_new; then
     first_server=$(echo "$servers" | head -n 1)
     echo "Opening file in GVim server: $first_server using $my_color"
     if $split; then
-        if ! gvim --remote-send ":vsplit $@<CR>"; then
+        if ! gvim --remote-send "<Esc>:rightbelow vs $@<CR>"; then
             start_new=true
         fi
     elif gvim --servername "$first_server" --remote-tab "$@"; then
