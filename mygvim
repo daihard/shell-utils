@@ -1,0 +1,61 @@
+#!/bin/bash
+# vim: set filetype=sh:
+
+script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
+
+## This creates the list of VIM colours to choose from
+my_color=$($script_dir/get_vim_color.sh)
+
+start_new=false
+split=false
+terminal=false
+
+while [ $# -gt 1 ]; do
+    case "$1" in
+        --new)
+            start_new=true
+            shift
+            ;;
+        --split)
+            split=true
+            shift
+            ;;
+        --terminal)
+            terminal=true
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+servers=$(gvim --serverlist)
+
+if [ -z "$servers" ]; then
+    start_new=true
+fi
+
+if ! $start_new; then
+    # Pick the first server from the list
+    first_server=$(echo "$servers" | head -n 1)
+    echo "Opening file in GVim server: $first_server using $my_color"
+    if $split; then
+        if ! gvim --remote-send ":vsplit $@<CR>"; then
+            start_new=true
+        fi
+    elif gvim --servername "$first_server" --remote-tab "$@"; then
+        gvim --remote-send "<Esc>:colorscheme $my_color<CR>"
+    else
+        start_new=true
+    fi
+fi
+
+if $start_new; then
+    echo "Starting a new instance using $my_color..."
+    gvim -c "colorscheme $my_color" "$@"
+    if $terminal; then
+        gvim --remote-send "<Esc>:terminal<CR>"
+    fi
+fi
+
