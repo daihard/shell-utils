@@ -52,9 +52,13 @@ done
 
 color_count="${#color_list[*]}"
 
-# Generate a (semi) random number within that range
-number=`date +%s`
-random=`expr $number % $color_count`
+# Generate a random number within that range
+random=`expr $RANDOM % $color_count`
+
+if [ $random -gt $color_count ]; then
+    echo "Error: $random should not exceed $color_count"
+    exit 1
+fi
 
 # Return the colour based on the random number
 echo "${color_list[$random]}"
