@@ -52,8 +52,13 @@ done
 
 color_count="${#color_list[*]}"
 
+if [ $color_count -eq 0 ]; then
+    echo "Error: There should at least be one available colour"
+    exit 1
+fi
+
 # Generate a random number within that range
-random=`expr $RANDOM % $color_count`
+random=$((RANDOM % $color_count))
 
 if [ $random -gt $color_count ]; then
     echo "Error: $random should not exceed $color_count"
