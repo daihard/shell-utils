@@ -17,8 +17,6 @@ function create_bad_color_list ()
 
 create_bad_color_list
 
-declare -a color_list
-
 # Return success if the specified colour is usable (i.e. dark)
 function use_this_color ()
 {
@@ -37,23 +35,36 @@ function use_this_color ()
     return $ret
 }
 
-vim_dir="/home/dtoyama/.vim/colors"
-counter=0
+declare -a color_list
 
-for ii in $vim_dir/*.vim; do
-    if [ -f $ii ]; then
-        color_name=$(basename "$ii" .vim)
-        if use_this_color $color_name; then
-            color_list[$counter]=$color_name
-            counter=`expr $counter + 1`
+function create_color_list ()
+{
+    local counter=${#color_list[@]}
+    local vim_dir=$1
+
+    echo "Color file path: $vim_dir" >&2
+    echo "color_list has $counter items" >&2
+
+    for ii in $vim_dir/*.vim; do
+        if [ -f $ii ]; then
+            color_name=$(basename "$ii" .vim)
+            if use_this_color $color_name; then
+                color_list[$counter]=$color_name
+                counter=`expr $counter + 1`
+            fi
         fi
-    fi
-done
+    done
+}
+
+version_num=$(gvim --version | head -n 1 | cut -d ' ' -f 5 | tr -d '.')
+
+create_color_list "/usr/share/vim/vim${version_num}/colors"
+create_color_list "$HOME/.vim/colors"
 
 color_count="${#color_list[*]}"
 
 if [ $color_count -eq 0 ]; then
-    echo "Error: There should at least be one available colour"
+    echo "Error: There should at least be one available colour" >&2
     exit 1
 fi
 
@@ -61,7 +72,7 @@ fi
 random=$((RANDOM % $color_count))
 
 if [ $random -gt $color_count ]; then
-    echo "Error: $random should not exceed $color_count"
+    echo "Error: $random should not exceed $color_count" >&2
     exit 1
 fi
 

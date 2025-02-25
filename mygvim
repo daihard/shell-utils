@@ -4,8 +4,10 @@
 script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
 
 ## Colour is chosen based on the available colours and an optional
-## exclude list (~/.vim/bad_colors.txt)
-my_color=$($script_dir/get_vim_color.sh)
+## exclude list (~/.vim/bad_colors.txt).
+##
+## Remove '2>/dev/null' to see debug messages
+my_color=$($script_dir/get_vim_color.sh 2>/dev/null)
 
 start_new=false
 split=false
