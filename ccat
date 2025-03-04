@@ -1,0 +1,18 @@
+# Check if a file is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+# Check if the file exists
+if [ ! -f "$1" ]; then
+    echo "Error: File '$1' not found."
+    exit 1
+fi
+
+# Use highlight if available, otherwise fall back to cat
+if command -v highlight >/dev/null 2>&1; then
+    highlight -O ansi "$1"
+else
+    cat "$1"
+fi
