@@ -28,7 +28,8 @@ if [ ! -f "$1" ]; then
     exit 1
 fi
 
-if command -v highlight; then
+# Use highlight if available, otherwise fall back to less
+if command -v highlight >/dev/null 2>&1; then
     highlight -O ansi "$1" | less ${show_ln} -R
 else
     less "$1"
