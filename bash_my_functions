@@ -1,0 +1,21 @@
+#!/bin/bash
+# vim: set filetype=sh:
+
+ccat() {
+    if command -v highlight >/dev/null 2>&1; then
+        highlight -O ansi "$@"
+    else
+        cat "$@"
+    fi
+}
+
+cless() {
+    if command -v highlight >/dev/null 2>&1; then
+        highlight -O ansi "$1" | less -R
+    else
+        less "$1"
+    fi
+}
+
+alias cat='ccat'
+alias less='cless'
