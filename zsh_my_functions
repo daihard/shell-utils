@@ -16,21 +16,5 @@ function scd {
     cd "$(searchdir $1)"
 }
 
-function ccat() {
-    if command -v highlight >/dev/null 2>&1; then
-        highlight -O ansi --force "$@"
-    else
-        cat "$@"
-    fi
-}
+source ~/Projects/github/shell-utils/bash_my_functions
 
-function cless() {
-    if command -v highlight >/dev/null 2>&1; then
-        highlight -O ansi --force "$@" | \less -R
-    else
-        \less "$@"
-    fi
-}
-
-alias cat='ccat'
-alias less='cless'
