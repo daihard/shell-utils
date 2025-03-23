@@ -1,15 +1,13 @@
-#!/bin/sh
-
 if [ -f ~/.sh_detectshell ]; then
     . ~/.sh_detectshell
 fi
 
-shell=$(detectshell)
+tshell=$(detectshell)
 
-if [ "$shell" == "Bash" ]; then
-    Echo "This is Bash!"
-elif [ "$shell" == "Zsh" ]; then
-    Echo "This is Zsh!"
+if [ "$tshell" == "Bash" ]; then
+    echo "This is Bash!"
+elif [ "$tshell" == "Zsh" ]; then
+    echo "This is Zsh!"
 else
     exit 1
 fi
