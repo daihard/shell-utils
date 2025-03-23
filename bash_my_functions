@@ -19,3 +19,14 @@ cless() {
 
 alias cat='ccat'
 alias less='cless'
+
+# Detect the shell
+checkshell() {
+    if [ -n "$BASH_VERSION" ]; then
+        echo "Bash"
+    elif [ -n "$ZSH_VERSION" ]; then
+        echo "Zsh"
+    else
+        echo "Unsupported"
+    fi
+}
