@@ -1,0 +1,25 @@
+# ~/.zsh_functions
+
+# Function for navigating up through history and moving cursor to the beginning of the line
+function history-up-with-cursor-at-start {
+    zle up-line-or-history
+    zle vi-beginning-of-line
+}
+zle -N history-up-with-cursor-at-start
+
+# Function for navigating down through history and moving cursor to the beginning of the line
+function history-down-with-cursor-at-start {
+    zle down-line-or-history
+    zle vi-beginning-of-line
+}
+zle -N history-down-with-cursor-at-start
+
+# Function to set up Vi mode key bindings
+function setup-vi-mode {
+    # Enable Vi mode
+    bindkey -v
+
+    # Bind 'k' and 'j' to custom history navigation functions
+    bindkey -M vicmd 'k' history-up-with-cursor-at-start
+    bindkey -M vicmd 'j' history-down-with-cursor-at-start
+}
