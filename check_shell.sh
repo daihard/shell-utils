@@ -8,7 +8,7 @@ case $parent_shell in
     bash)
         echo "Running in Bash."
         ;;
-    zsh)
+    -zsh)
         echo "Running in Zsh."
         ;;
     ksh)
