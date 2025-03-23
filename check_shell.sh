@@ -1,22 +1,8 @@
 #!/bin/sh
 
-## check_shell() {
-##     # Detect the shell
-##     parent_shell=$(ps -o comm= -p $PPID)
-## 
-##     case $parent_shell in
-##         bash)
-##             echo "Bash"
-##             ;;
-##         -zsh)
-##             echo "Zsh"
-##             ;;
-##         *)
-##             echo "Unsuported"
-##             ;;
-##     esac
-## }
-## 
-#
-checkshell
+if [ -f ~/.sh_detectshell ]; then
+    . ~/.sh_detectshell
+fi
+
+detectshell
 echo $1
