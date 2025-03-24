@@ -3,7 +3,7 @@
 
 ccat() {
     if command -v highlight >/dev/null 2>&1; then
-        highlight -O ansi "$@"
+        highlight -O ansi --force "$@"
     else
         cat "$@"
     fi
@@ -11,9 +11,9 @@ ccat() {
 
 cless() {
     if command -v highlight >/dev/null 2>&1; then
-        highlight -O ansi "$1" | less -R
+        highlight -O ansi --force "$@" | \less -R
     else
-        less "$1"
+        \less "$@"
     fi
 }
 
