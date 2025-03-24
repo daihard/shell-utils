@@ -19,3 +19,10 @@ cless() {
 
 alias cat='ccat'
 alias less='cless'
+
+if [ "$(uname -s)" == "Darwin" ]; then
+    # Define a function instead of an alias
+    gvim () {
+        /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"
+    }
+fi
