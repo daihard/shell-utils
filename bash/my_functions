@@ -20,8 +20,10 @@ cless() {
 alias cat='ccat'
 alias less='cless'
 
-# This script fails to load if sourced in a non-macOS
-# platform
-if [ -f ~/.macos_gvim_function ]; then
-    source ~/.macos_gvim_function
+if [ "$(uname -s)" == "Darwin" ]; then
+    script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
+    in_file=${script_dir}/macos/gvim_functions
+    if [ -f $in_file ]; then
+        . $in_file
+    fi
 fi

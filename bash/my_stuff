@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
+## echo "The file is in $script_dir"
+
+in_file=${script_dir}/my_work
+if [ -f $in_file ]; then
+    . $in_file
+fi
+
+in_file=${script_dir}/my_prompt
+if [ -f $in_file ]; then
+    . $in_file
+fi
+
+in_file=${script_dir}/my_functions
+if [ -f $in_file ]; then
+    . $in_file
+fi
+
