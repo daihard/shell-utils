@@ -8,8 +8,11 @@ alias vi='mygvim'
 alias cp='cp -ip'
 alias grep='grep -n'
 
-# These assume the coreutils package is installed via Homebrew
+# These assume the following packages are installed via Homebrew
+# * coreutils
+# * findutils
 alias df='gdf'
+alias find='gfind'
 
 # Fix the new annoying behaviour of ls...
 ##alias ls='ls --color=auto --escape'
