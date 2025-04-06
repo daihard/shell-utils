@@ -7,5 +7,5 @@ source /etc/os-release
 
 if [ "$ID" == "ubuntu" ]; then
     script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
-    source ${script_dir}/linux/my_work_ubuntu.sh
+    source ${script_dir}/my_work_ubuntu.sh
 fi
