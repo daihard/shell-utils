@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# linux/my_work.sh
+# linux/my_work_ubuntu.sh
 # Fail if this file is used on a non-macOS platform
 
 [ "$(uname -s)" = "Linux" ] || { echo "macOS required" >&2; exit 1; }
