@@ -5,17 +5,16 @@
 [ "$(uname -s)" = "Darwin" ] || { echo "macOS required" >&2; exit 1; }
 
 alias vi='mygvim'
-alias cp='cp -ip'
-alias grep='grep -n'
 
 # These assume the following packages are installed via Homebrew
 # * coreutils
-# * findutils
-# * gnu-sed
 alias df='gdf'
+alias ls='gls --ignore=".DS_*" --group-directories-first --color=auto'
+# alias ls='LC_COLLATE=C ls --color=auto'
+
+# * findutils
 alias find='gfind'
+
+# * gnu-sed
 alias sed='gsed'
 
-# Fix the new annoying behaviour of ls...
-##alias ls='ls --color=auto --escape'
-alias ls='LC_COLLATE=C ls --color=always'
