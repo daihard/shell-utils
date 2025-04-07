@@ -13,8 +13,6 @@ if [ "$MY_CONVERT_OUTDIR" != "" ]; then
     outdir=$MY_CONVERT_OUTDIR
 fi
 
-echo "Outputting to $outdir..."
-
 declare -a ext_list=("jpg" "jpeg" "png" "JPG" "JPEG" "PNG")
 
 while [ $# -gt 1 ]; do
@@ -32,6 +30,8 @@ while [ $# -gt 1 ]; do
             ;;
     esac
 done
+
+echo "Outputting to $outdir..."
 
 for ext in ${ext_list[@]}; do 
     found_file=$(find . -type f -name "*.${ext}")
