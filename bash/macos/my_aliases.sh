@@ -11,8 +11,10 @@ alias grep='grep -n'
 # These assume the following packages are installed via Homebrew
 # * coreutils
 # * findutils
+# * gnu-sed
 alias df='gdf'
 alias find='gfind'
+alias sed='gsed'
 
 # Fix the new annoying behaviour of ls...
 ##alias ls='ls --color=auto --escape'
