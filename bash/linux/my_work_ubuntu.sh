@@ -5,7 +5,7 @@
 [ "$(uname -s)" = "Linux" ] || { echo "Linux required" >&2; exit 1; }
 
 source /etc/os-release
-[ "$ID" = "ubuntu" ] || { echo "Ubuntu required >&2; exit 1; }
+[ "$ID" = "ubuntu" ] || { echo "Ubuntu required" >&2; exit 1; }
 
 export WIN_LOGIN=dtoyama
 
