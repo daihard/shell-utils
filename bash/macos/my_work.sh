@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Fail if this file is used on a non-macOS platform
+[ "$(uname -s)" = "Darwin" ] || { echo "macOS required" >&2; exit 1; }
+
 # Java stuff
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
 export JAVA_INCLUDE_PATH=${JAVA_HOME}/include
