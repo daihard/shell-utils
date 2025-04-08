@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # linux/my_work_ubuntu.sh
-# Fail if this file is used on a non-macOS platform
 
-[ "$(uname -s)" = "Linux" ] || { echo "macOS required" >&2; exit 1; }
+# Fail if this file is used on a non-macOS platform
+[ "$(uname -s)" = "Linux" ] || { echo "Linux required" >&2; exit 1; }
+
+source /etc/os-release
+[ "$ID" = "ubuntu" ] || { echo "Ubuntu required >&2; exit 1; }
 
 export WIN_LOGIN=dtoyama
 
