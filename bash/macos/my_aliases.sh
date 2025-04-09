@@ -4,8 +4,6 @@
 # Fail if this file is used on a non-macOS platform
 [ "$(uname -s)" = "Darwin" ] || { echo "macOS required" >&2; exit 1; }
 
-alias vi='mygvim'
-
 # These assume the following packages are installed via Homebrew
 # * coreutils
 alias df='gdf'

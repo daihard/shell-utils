@@ -21,8 +21,9 @@ alias cat='ccat'
 alias less='cless'
 
 if [ "$(uname -s)" == "Darwin" ]; then
-    gvim() {
-        # Launch MacVim in the background
-        /Applications/MacVim.app/Contents/MacOS/Vim -g "$@" &
-    }
+    script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
+    in_file=${script_dir}/macos/bash_env.sh
+    if [ -f $in_file ]; then
+        . $in_file
+    fi
 fi

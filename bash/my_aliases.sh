@@ -2,6 +2,7 @@
 # my_aliases for Bash
 
 # Common aliases between Linux and macOS
+alias vi='myvi'
 alias cp='cp -ip'
 alias grep='grep -n'
 
