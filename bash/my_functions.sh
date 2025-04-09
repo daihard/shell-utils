@@ -1,5 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim: set filetype=sh:
+
+
+myvim() {
+    if [[ -n "${DISPLAY:-}" ]] && command -v gvim >/dev/null 2>&1; then
+        mygvim "$@"
+    else
+        vim "$@" 2> /dev/null
+    fi
+}
 
 ccat() {
     if command -v highlight >/dev/null 2>&1; then
@@ -17,13 +26,12 @@ cless() {
     fi
 }
 
+alias vi='myvim'
 alias cat='ccat'
 alias less='cless'
 
-if [ "$(uname -s)" == "Darwin" ]; then
-    script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
-    in_file=${script_dir}/macos/bash_env.sh
-    if [ -f $in_file ]; then
-        . $in_file
-    fi
+script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
+in_file=${script_dir}/bash_env.sh
+if [ -f $in_file ]; then
+    . $in_file
 fi

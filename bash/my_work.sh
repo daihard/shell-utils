@@ -11,15 +11,15 @@ function scd {
 
 script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
 
-if [ "$(uname -s)" == "Linux" ]; then
+if [ "$(uname -s)" == "Darwin" ]; then
+    in_file=${script_dir}/my_work_macos.sh
+elif [ "$(uname -s)" == "Linux" ]; then
     source /etc/os-release
     if [ "$ID" == "ubuntu" ]; then
-        in_file=${script_dir}/linux/my_work_ubuntu.sh
+        in_file=${script_dir}/my_work_ubuntu.sh
     else
         return 0
     fi
-elif [ "$(uname -s)" == "Darwin" ]; then
-    in_file=${script_dir}/macos/my_work.sh
 fi
 
 if [ -f $in_file ]; then

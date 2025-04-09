@@ -12,12 +12,12 @@ if [ -f $in_file ]; then
     . $in_file
 fi
 
-in_file=${script_dir}/my_prompt
+in_file=${script_dir}/my_prompt.sh
 if [ -f $in_file ]; then
     . $in_file
 fi
 
-in_file=${script_dir}/my_functions
+in_file=${script_dir}/my_functions.sh
 if [ -f $in_file ]; then
     . $in_file
 fi
