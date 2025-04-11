@@ -7,14 +7,14 @@ alias grep='grep -n'
 
 if [ "$(uname -s)" == "Darwin" ]; then
     # These assume the following packages are installed via Homebrew
-    # * coreutils
+    # coreutils
     alias df='gdf'
     alias ls='gls --ignore=".DS_*" --group-directories-first --color=auto'
     # alias ls='LC_COLLATE=C ls --color=auto'
     
-    # * findutils
+    # findutils
     alias find='gfind'
     
-    # * gnu-sed
+    # gnu-sed
     alias sed='gsed'
 fi
