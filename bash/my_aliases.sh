@@ -3,7 +3,7 @@
 
 # Common aliases between Linux and macOS
 alias cp='cp -ip'
-alias grep='grep -n'
+alias grep='grep -n --color=auto'
 
 if [ "$(uname -s)" = "Darwin" ]; then
     # These assume the following packages are installed via Homebrew
