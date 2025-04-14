@@ -33,18 +33,26 @@ done
 
 echo "Outputting to $outdir..."
 
+# The BSD version of 'ls' behaves differently with '-v'. Make
+# sure we use the GNU version if available
+if command -v gls >/dev/null 2>&1; then
+    ls_cmd=gls
+else
+    ls_cmd=ls
+fi
+
 for ext in ${ext_list[@]}; do 
     found_file=$(find . -type f -name "*.${ext}")
     if [[ "$found_file" != "" ]]; then
         ## Convert each image file to a pdf
-        for f in $(ls -v *.${ext}); do
+        for f in $(${ls_cmd} -v *.${ext}); do
             convert -quality 100 ./"$f" -density 300 ./"${f%.${ext}}.pdf"
         done
     fi
 done
 
 ## Combine all the pdf files into one big pdf
-pdftk $(ls -v *.pdf) cat output $title.pdf && mv $title.pdf ${outdir}
+pdftk $(${ls_cmd} -v *.pdf) cat output $title.pdf && mv $title.pdf ${outdir}
 
 unset ext
 unset ext_list
