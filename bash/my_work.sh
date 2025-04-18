@@ -2,15 +2,13 @@
 # my_work.sh
 
 # My own git function to force color outputs
-function cgit() {
+function git() {
     if [[ "$1" = "grep" ]]; then
         command git grep --color=always "${@:2}"
     else
         command git "$@"
     fi
 }
-
-alias git='cgit'
 
 # Sverre's scripts
 function rcd {

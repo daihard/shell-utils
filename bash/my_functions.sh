@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # vim: set filetype=sh:
 
-myvim () {
+vi () {
     if [[ -n "${DISPLAY:-}" ]] && command -v gvim >/dev/null 2>&1; then
         mygvim "$@"
     else
-        vim "$@" 2> /dev/null
+        command vim -- "$@" 2> /dev/null
     fi
 }
 
-ccat () {
+cat () {
     # Use the GNU version if available (on macOS)
     if command -v gcat >/dev/null 2>&1; then
         cat_exec=gcat
@@ -20,21 +20,22 @@ ccat () {
     if command -v highlight >/dev/null 2>&1; then
         highlight -O ansi --force "$@"
     else
-        ${cat_exec} "$@"
+        command ${cat_exec} -- "$@"
     fi
 }
 
-cless () {
+less () {
+    if [[ $# -eq 0 ]]; then
+        command less  # Handle empty arguments
+        return # This preserves the status of "command less" above
+    fi
+
     if command -v highlight >/dev/null 2>&1; then
-        highlight -O ansi --force "$@" | \less -R
+        highlight -O ansi --force "$@" | command less -R
     else
-        \less "$@"
+        command less -- "$@"
     fi
 }
-
-alias vi='myvim'
-alias cat='ccat'
-alias less='cless'
 
 # bash_env.sh defines functions that are used both interactively
 # and in scripts.
