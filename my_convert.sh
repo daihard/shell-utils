@@ -1,11 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-SAVEIFS=$IFS
-IFS=$(echo -en "\n\b")
+# SAVEIFS=$IFS
+# IFS=$(echo -en "\n\b")
 
-#ext="jpg"
 title=some_magazine
-
 outdir=~/Documents/books/
 
 # Override the output directory if set by an enrivonment var
@@ -33,30 +31,23 @@ done
 
 echo "Outputting to $outdir..."
 
-# The BSD version of 'ls' behaves differently with '-v'. Make
-# sure we use the GNU version if available
-if command -v gls >/dev/null 2>&1; then
-    ls_cmd=gls
-else
-    ls_cmd=ls
-fi
-
-for ext in ${ext_list[@]}; do 
-    found_file=$(find . -type f -name "*.${ext}")
-    if [[ "$found_file" != "" ]]; then
-        ## Convert each image file to a pdf
-        for f in $(${ls_cmd} -v *.${ext}); do
-            convert -quality 100 ./"$f" -density 300 ./"${f%.${ext}}.pdf"
-        done
-    fi
+# Use 'find' instead of 'ls -v' so file names that include special characters
+# (such as spaces) can be handled correctly
+for ext in ${ext_list[@]}; do
+    find . -maxdepth 1 -name "*.${ext}" -print0 | sort -z -V | while IFS= read -r -d '' f; do
+        clean_f="${f#./}"
+        # echo "${clean_f}"
+        convert -quality 100 ./"${clean_f}" -density 300 ./"${clean_f%.${ext}}.pdf"
+    done
 done
 
 ## Combine all the pdf files into one big pdf
-pdftk $(${ls_cmd} -v *.pdf) cat output $title.pdf && mv $title.pdf ${outdir}
+mapfile -d '' pdf_files < <(find . -type f -name "*.pdf" -print0 | sort -z -V)
+pdftk ${pdf_files[@]} cat output $title.pdf && mv $title.pdf ${outdir}
 
 unset ext
 unset ext_list
 unset title
 unset outdir
 
-IFS=$SAVEIFS
+# IFS=$SAVEIFS
