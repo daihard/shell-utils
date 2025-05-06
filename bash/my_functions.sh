@@ -24,7 +24,7 @@ cat () {
     fi
 }
 
-less () {
+function less () {
     if [[ $# -eq 0 ]]; then
         command less  # Handle empty arguments
         return # This preserves the status of "command less" above
@@ -34,6 +34,21 @@ less () {
         highlight -O ansi --force "$@" | command less -R
     else
         command less -- "$@"
+    fi
+}
+
+function cr () {
+	local root_dir="$HOME"
+    local len="${#root_dir}"
+    local input_dir="$1"
+
+    if [[ "$input_dir" == ".." || "${input_dir:0:3}" == "../" ]]; then
+        cd "$input_dir" 
+    elif [[ "${input_dir:0:$len}" == "${root_dir}" ]]; then
+        # Input directory begins with "~/"
+        cd "$input_dir" 
+    else
+        cd "$HOME/$input_dir"
     fi
 }
 
