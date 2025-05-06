@@ -39,8 +39,7 @@ less () {
 
 # bash_env.sh defines functions that are used both interactively
 # and in scripts.
-script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")
-in_file=${script_dir}/bash_env.sh
-if [ -f $in_file ]; then
-    . $in_file
+if [ -f ~/.bash_env ]; then
+    . ~/.bash_env
 fi
+
