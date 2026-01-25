@@ -12,5 +12,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
         /Applications/MacVim.app/Contents/MacOS/Vim -g "$@" &
     }
     realpath() { grealpath "$@"; }
+    objdump() { /opt/homebrew/opt/binutils/bin/gobjdump "$@"; }
 fi
 
