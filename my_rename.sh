@@ -10,6 +10,7 @@ show_help() {
     echo "Usage: $(basename "$0") [OPTIONS]"
     echo
     echo "Renames all visible files in the directory chronologically (Oldest -> Newest)."
+    echo "Works on both macOS (BSD) and Linux (GNU)."
     echo
     echo "Options:"
     echo "  -p, --prefix STR    Set the naming prefix (default: Dai)"
@@ -36,10 +37,21 @@ if [ "$DRY_RUN" = true ]; then
     EXEC_CMD="cat"
 fi
 
-# 1. find: Look for files, ignore hidden files (names starting with .)
-# 2. stat: -f "%m %N" is the BSD format for (modification_time filename)
-# 3. sort -n: Sort by timestamp
-find "$DIR" -maxdepth 1 -type f ! -name ".*" ! -name "$(basename "$0")" -exec stat -f "%m %N" {} + | \
+# Detect OS to handle stat flags
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS / BSD
+    FIND_EXEC='stat -f "%m %N" "$@"'
+else
+    # Linux / GNU
+    FIND_EXEC='stat -c "%Y %n" "$@"'
+fi
+
+# 1. find: Look for visible files
+# 2. sh -c: Passes the files ($@) to the correct stat version
+# 3. sort -n: Sorts by Unix timestamp
+# 4. awk: Handles renaming logic
+find "$DIR" -maxdepth 1 -type f ! -name ".*" ! -name "$(basename "$0")" \
+    -exec sh -c "$FIND_EXEC" sh {} + | \
     sort -n | \
     cut -d' ' -f2- | \
     awk -v dir="$DIR" -v prefix="$PREFIX" -v start="$START" 'BEGIN { count=start }
