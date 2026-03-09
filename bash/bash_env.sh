@@ -13,5 +13,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
     }
     realpath() { grealpath "$@"; }
     objdump() { /opt/homebrew/opt/binutils/bin/gobjdump "$@"; }
+    tar() { gtar "$@"; }
 fi
 
