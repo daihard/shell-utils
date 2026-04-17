@@ -27,4 +27,5 @@ bldwht='\[\e[1;37m\]' # White
 txtrst='\[\e[0m\]' # Reset
 
 # Set custom prompt
-PS1="${txtgrn}┌╼[${txtrst}\u@\h${txtgrn}]─[${txtrst}\w${txtgrn}]\n└╼[${txtrst}\$${txtgrn}]─>${txtrst} "
+## PS1="${txtgrn}┌╼[${txtrst}\u@\h${txtgrn}]─[${txtrst}\w${txtgrn}]\n└╼[${txtrst}\$${txtgrn}]─>${txtrst} "
+PS1="${bldgrn}┌╼[${txtrst}\u@\h${bldgrn}]─[${txtrst}\w${bldgrn}]\n[${txtrst}\$${bldgrn}]─>${txtrst} "
