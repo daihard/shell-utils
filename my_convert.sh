@@ -8,7 +8,7 @@ if [ "$MY_CONVERT_OUTDIR" != "" ]; then
     outdir=$MY_CONVERT_OUTDIR
 fi
 
-declare -a ext_list=("jpg" "jpeg" "png" "JPG" "JPEG" "PNG")
+declare -a ext_list=("jpg" "jpeg" "png" "JPG" "JPEG" "PNG" "webp")
 
 while [ $# -gt 1 ]; do
     case "$1" in
