@@ -14,5 +14,9 @@ if [ "$(uname -s)" = "Darwin" ]; then
     realpath() { grealpath "$@"; }
     objdump() { /opt/homebrew/opt/binutils/bin/gobjdump "$@"; }
     tar() { gtar "$@"; }
+
+    heic2jpg() {
+        convert "$1" -quality 100 -sampling-factor 4:4:4 -auto-orient "${1%.*}.jpg"
+    }
 fi
 
