@@ -9,3 +9,8 @@ export JAVA_INCLUDE_PATH=${JAVA_HOME}/include
 export JAVA_INCLUDE_PATH2=${JAVA_HOME}/include/darwin
 export JAVA_AWT_LIBRARY=$JAVA_HOME/lib/libawt.dylib
 export JAVA_JVM_LIBRARY=$JAVA_HOME/lib/server/libjvm.dylib
+
+export RDS_HOME=${HOME}/rdms/84
+
+# Sverre's ninja script
+export NATIVE_NINJA_DIR="/opt/homebrew/bin"

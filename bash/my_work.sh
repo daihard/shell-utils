@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # my_work.sh
-
+#
+#
 # My own git function to force color outputs
 function git() {
     if [[ "$1" = "grep" ]]; then
@@ -17,6 +18,20 @@ function rcd {
 
 function scd {
     cd "$(searchdir $1)"
+}
+
+function code() {
+  case "$1" in
+    monza)
+      command code "${HOME}/rdm/monza/monza.code-workspace"
+      ;;
+    venice)
+      command code "${HOME}/rdm/venice/venice.code-workspace"
+      ;;
+    *)
+      command code "$@"
+      ;;
+  esac
 }
 
 script_dir=$(dirname "$(readlink -f "$BASH_SOURCE")")

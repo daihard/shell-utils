@@ -53,3 +53,7 @@ export RDME_DEBUG_BUILD=1
 # PC-Lint
 export LINT_ROOT=/usr/local/etc/flint
 
+# Sverre's ninja script
+export NATIVE_NINJA_DIR="/usr/bin/ninja"
+
+
