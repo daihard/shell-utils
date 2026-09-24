@@ -26,7 +26,17 @@ while [ $# -gt 1 ]; do
     esac
 done
 
-echo "Outputting to $outdir..."
+# Prefer ImageMagick 7's 'magick', fall back to ImageMagick 6's 'convert'
+if command -v magick >/dev/null 2>&1; then
+    MAGICK_CMD="magick"
+elif command -v convert >/dev/null 2>&1; then
+    MAGICK_CMD="convert"
+else
+    echo "Error: ImageMagick (magick or convert) is not installed." >&2
+    exit 1
+fi
+
+echo "$MAGICK_CMD outputting to $outdir..."
 
 # Use 'find' instead of 'ls -v' so file names that include special characters
 # (such as spaces) can be handled correctly
@@ -34,7 +44,8 @@ for ext in "${ext_list[@]}"; do
     find . -maxdepth 1 -name "*.${ext}" -print0 | sort -z -V | while IFS= read -r -d '' f; do
         clean_f="${f#./}"
         # echo "${clean_f}"
-        convert -quality 100 ./"${clean_f}" -density 300 ./"${clean_f%."${ext}"}.pdf"
+        # convert -quality 100 ./"${clean_f}" -density 300 ./"${clean_f%."${ext}"}.pdf"
+        ${MAGICK_CMD} -density 300 ./"${clean_f}" -quality 100 ./"${clean_f%."${ext}"}.pdf"
     done
 done
 
