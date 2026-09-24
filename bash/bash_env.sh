@@ -16,7 +16,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     tar() { gtar "$@"; }
 
     heic2jpg() {
-        convert "$1" -quality 100 -sampling-factor 4:4:4 -auto-orient "${1%.*}.jpg"
+        magick "$1" -auto-orient -quality 100 -sampling-factor 4:4:4 "${1%.*}.jpg"
     }
 fi
 
