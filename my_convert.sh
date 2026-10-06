@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-title=some_magazine
+title="some_magazine"
 outdir=~/Documents/books/
 
-# Override the output directory if set by an enrivonment var
-if [ "$MY_CONVERT_OUTDIR" != "" ]; then
-    outdir=$MY_CONVERT_OUTDIR
+# Override the output directory if set by an environment var
+if [ -n "$MY_CONVERT_OUTDIR" ]; then
+    outdir="$MY_CONVERT_OUTDIR"
 fi
 
-declare -a ext_list=("jpg" "jpeg" "png" "JPG" "JPEG" "PNG" "webp")
-
-while [ $# -gt 1 ]; do
+while [ $# -gt 0 ]; do
     case "$1" in
         --title)
-            title=$2
-            shift
+            title="$2"
+            shift 2
             ;;
         --outdir)
-            outdir=$2
-            shift
+            outdir="$2"
+            shift 2
             ;;
         *)
             shift
@@ -38,20 +36,28 @@ fi
 
 echo "$MAGICK_CMD outputting to $outdir..."
 
-# Use 'find' instead of 'ls -v' so file names that include special characters
-# (such as spaces) can be handled correctly
+# Ensure target directory exists
+mkdir -p "$outdir"
+
+# Enable nullglob and case-insensitive matching for extensions
+shopt -s nullglob nocaseglob
+ext_list=("jpg" "jpeg" "png" "webp")
+
 for ext in "${ext_list[@]}"; do
-    find . -maxdepth 1 -name "*.${ext}" -print0 | sort -z -V | while IFS= read -r -d '' f; do
-        clean_f="${f#./}"
-        # echo "${clean_f}"
-        # convert -quality 100 ./"${clean_f}" -density 300 ./"${clean_f%."${ext}"}.pdf"
-        ${MAGICK_CMD} -density 300 ./"${clean_f}" -quality 100 ./"${clean_f%."${ext}"}.pdf"
+    for f in *."${ext}"; do
+        [ -e "${f}" ] || continue
+        "${MAGICK_CMD}" -density 300 ./"${f}" -quality 100 ./"${f%.*}.pdf"
     done
 done
+shopt -u nocaseglob
 
 ## Combine all the pdf files into one big pdf
-mapfile -d '' pdf_files < <(find . -type f -name "*.pdf" -print0 | sort -z -V)
-pdftk "${pdf_files[@]}" cat output "$title".pdf && mv "$title".pdf "${outdir}"
+pdf_files=( *.pdf )
+shopt -u nullglob
+
+if (( ${#pdf_files[@]} > 0 )); then
+    pdftk "${pdf_files[@]}" cat output "$title.pdf" && mv "$title.pdf" "$outdir"
+fi
 
 unset ext
 unset ext_list
