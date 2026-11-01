@@ -20,3 +20,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
     }
 fi
 
+# Strips metadata but restores orientation and color profile
+strip_metadata() {
+    exiftool -P -overwrite_original -all:all= -APP11:all= -tagsFromFile @ -Orientation -ColorSpace -icc_profile "$@"
+}
+
