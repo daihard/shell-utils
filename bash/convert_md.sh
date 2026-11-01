@@ -61,9 +61,9 @@ OUTPUT_PDF="${INPUT_MD%.*}.pdf"
 
 # Convert markdown directly to PDF via Typst engine
 pandoc "$INPUT_MD" -o "$OUTPUT_PDF" --pdf-engine=typst \
-  -V fontsize=14pt \
+  -V fontsize=16pt \
   -V papersize=us-letter \
-  --metadata-file=<(printf 'margin:\n  x: 1in\n  y: 0.5in\n')
+  --metadata-file=<(printf 'margin:\n  x: 0.5in\n  y: 1in\n')
 
 echo "Generated: $OUTPUT_PDF"
 
