@@ -18,6 +18,23 @@ if [ "$(uname -s)" = "Darwin" ]; then
     heic2jpg() {
         magick "$1" -auto-orient -quality 100 -sampling-factor 4:4:4 "${1%.*}.jpg"
     }
+
+    mdvw() {
+        local target_file=""
+        if [ -n "$1" ]; then
+            target_file="$(cd "$(dirname "$1")" 2>/dev/null && pwd)/$(basename "$1")"
+        fi
+
+        osascript -e 'on run argv' \
+                  -e '  set filePath to item 1 of argv' \
+                  -e '  tell application "iTerm2"' \
+                  -e '    create window with default profile' \
+                  -e '    tell current session of current window' \
+                  -e '      write text "mdv " & quoted form of filePath & "; exit"' \
+                  -e '    end tell' \
+                  -e '  end tell' \
+                  -e 'end run' -- "$target_file"
+    }
 fi
 
 # Strips metadata but restores orientation and color profile
